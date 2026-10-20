@@ -1,0 +1,9 @@
+physics:
+  gravity_mps2: 9.80665
+  timestep_s: 0.05              # simulation step size
+  substeps: 4                   # integration substeps per step
+  drag_coefficient: 0.3
+  reference_area_m2: 10.75      # cross-sectional area for drag
+  ground_y_m: 0.0
+  max_landing_velocity_mps: 2.0 # safe touchdown speed
+  max_landing_angle_deg: 5.0    # safe touchdown tilt

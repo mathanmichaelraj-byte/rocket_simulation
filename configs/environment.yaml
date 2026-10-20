@@ -1,0 +1,13 @@
+environment:
+  initial_altitude_m: 1500.0
+  initial_x_range_m: [-200.0, 200.0]
+  initial_vx_range_mps: [-20.0, 20.0]
+  initial_vy_range_mps: [-80.0, -40.0]
+  initial_angle_range_deg: [-10.0, 10.0]
+  pad_x_m: 0.0
+  pad_half_width_m: 5.0
+  wind:
+    enabled: true
+    max_speed_mps: 10.0
+  observation_noise: false
+  max_episode_steps: 1000

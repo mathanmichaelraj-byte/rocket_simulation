@@ -1,0 +1,11 @@
+rocket:
+  dry_mass_kg: 25000.0          # mass without fuel
+  fuel_mass_kg: 10000.0         # initial fuel load
+  height_m: 50.0                # total rocket height
+  radius_m: 1.85                # body radius
+  moment_of_inertia: 1.2e6      # kg·m² about center of mass
+  max_gimbal_angle_deg: 5.0     # main engine gimbal limit
+  landing_legs:
+    count: 4
+    deploy_altitude_m: 500.0
+    span_m: 6.0
