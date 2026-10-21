@@ -3,7 +3,7 @@ rocket:
   fuel_mass_kg: 10000.0         # initial fuel load
   height_m: 50.0                # total rocket height
   radius_m: 1.85                # body radius
-  moment_of_inertia: 1.2e6      # kg·m² about center of mass
+  moment_of_inertia: 1.2e+6     # kg·m² about center of mass
   max_gimbal_angle_deg: 5.0     # main engine gimbal limit
   landing_legs:
     count: 4

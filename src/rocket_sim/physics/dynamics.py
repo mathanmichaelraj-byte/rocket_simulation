@@ -38,13 +38,18 @@ def step(
     torque = -thrust_n * np.sin(gimbal_rad) * (cfg_rocket.height_m * 0.4)
     alpha = torque / cfg_rocket.moment_of_inertia
 
+    # Semi-implicit (symplectic) Euler: advance velocities first, then positions
+    vx = state.vx + ax * dt
+    vy = state.vy + ay * dt
+    omega = state.omega + alpha * dt
+
     return RocketState(
-        x=state.x + state.vx * dt,
-        y=max(state.y + state.vy * dt, cfg_phys.ground_y_m),
-        vx=state.vx + ax * dt,
-        vy=state.vy + ay * dt,
-        angle=state.angle + state.omega * dt,
-        omega=state.omega + alpha * dt,
+        x=state.x + vx * dt,
+        y=max(state.y + vy * dt, cfg_phys.ground_y_m),
+        vx=vx,
+        vy=vy,
+        angle=state.angle + omega * dt,
+        omega=omega,
         fuel_kg=state.fuel_kg,
         legs_deployed=state.legs_deployed,
     )

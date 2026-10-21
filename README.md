@@ -682,9 +682,9 @@ Use a separate evaluation set and report the number of trials alongside the resu
 
 ## Development Roadmap
 
-- [ ] **Phase 1:** Repository setup and dependency verification.
-- [ ] **Phase 2:** Core rocket dynamics and gravity.
-- [ ] **Phase 3:** Fuel consumption and propulsion.
+- [x] **Phase 1:** Repository setup and dependency verification.
+- [x] **Phase 2:** Core rocket dynamics and gravity.
+- [x] **Phase 3:** Fuel consumption and propulsion.
 - [ ] **Phase 4:** Ground contact and landing conditions.
 - [ ] **Phase 5:** Automated physics tests.
 - [ ] **Phase 6:** Gymnasium environment.

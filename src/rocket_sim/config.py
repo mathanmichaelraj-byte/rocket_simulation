@@ -7,12 +7,27 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 
-CONFIG_DIR = Path(__file__).parents[3] / "configs"
+CONFIG_DIR = Path(__file__).parents[2] / "configs"
 
 
 def _load(name: str) -> dict:
     with open(CONFIG_DIR / name) as f:
         return yaml.safe_load(f)
+
+
+def _coerce(cls, data: dict):
+    """Build a dataclass from YAML data, coercing numeric strings (e.g. '1.2e6') to floats."""
+    kwargs = {}
+    for name, value in data.items():
+        if not hasattr(cls, name):
+            continue
+        field_type = cls.__dataclass_fields__[name].type
+        if field_type in (float, "float") and isinstance(value, str):
+            value = float(value)
+        elif field_type in (int, "int") and isinstance(value, str):
+            value = int(value)
+        kwargs[name] = value
+    return cls(**kwargs)
 
 
 @dataclass
@@ -50,6 +65,9 @@ class TrainingConfig:
     gae_lambda: float = 0.95
     clip_range: float = 0.2
     ent_coef: float = 0.01
+    vf_coef: float = 0.5
+    max_grad_norm: float = 0.5
+    checkpoint_freq: int = 100_000
     log_dir: str = "logs/"
     model_dir: str = "models/"
 
@@ -63,20 +81,16 @@ class EnvironmentConfig:
 
 
 def load_physics() -> PhysicsConfig:
-    data = _load("physics.yaml")["physics"]
-    return PhysicsConfig(**{k: v for k, v in data.items() if hasattr(PhysicsConfig, k)})
+    return _coerce(PhysicsConfig, _load("physics.yaml")["physics"])
 
 
 def load_rocket() -> RocketConfig:
-    data = _load("rocket.yaml")["rocket"]
-    return RocketConfig(**{k: v for k, v in data.items() if hasattr(RocketConfig, k)})
+    return _coerce(RocketConfig, _load("rocket.yaml")["rocket"])
 
 
 def load_training() -> TrainingConfig:
-    data = _load("training.yaml")["training"]
-    return TrainingConfig(**{k: v for k, v in data.items() if hasattr(TrainingConfig, k)})
+    return _coerce(TrainingConfig, _load("training.yaml")["training"])
 
 
 def load_environment() -> EnvironmentConfig:
-    data = _load("environment.yaml")["environment"]
-    return EnvironmentConfig(**{k: v for k, v in data.items() if hasattr(EnvironmentConfig, k)})
+    return _coerce(EnvironmentConfig, _load("environment.yaml")["environment"])
